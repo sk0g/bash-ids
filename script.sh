@@ -33,7 +33,7 @@ case $decision in
     while true; do
         read -p "[Y]es, I have added/edited the files and want to scan them now " isReady
 
-        if [[ $isReady == "Y" ]]; then
+        if [[ "$isReady" == "Y" ]]; then
             break
         fi
     done
