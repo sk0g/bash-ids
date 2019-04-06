@@ -29,6 +29,15 @@ case $decision in
     ;;
 "N")
     echo "Very well, create the files"
+
+    while true; do
+        read -p "[Y]es, I have added/edited the files and want to scan them now " isReady
+
+        if [[ $isReady == "Y" ]]; then
+            break
+        fi
+    done
+    echo "Scanning files and stuff now"
     ;;
 *)
     echo "Invalid input detected. Please try to follow instructions."
