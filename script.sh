@@ -11,6 +11,13 @@ function createFiles() {
     echo "Not so secret data" >publicFolder/text.txt
 }
 
+function getFileInformation() {
+    # Find all files/ folders under current directory
+    # Exclude readme.md, script files, git-related shit, and go pkg (auto formatter dependencies)
+    files=$(find . ! -name "*.sh" ! -name "go.*" ! -name "*.md" ! -path './.git*')
+    echo "$files"
+}
+
 # Prompt
 echo "This is an Intrusion Detection System"
 echo "Do you want to let this program create files?"
@@ -38,6 +45,7 @@ case $decision in
         fi
     done
     echo "Scanning files and stuff now"
+    getFileInformation
     ;;
 *)
     echo "Invalid input detected. Please try to follow instructions."
