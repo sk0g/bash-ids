@@ -6,7 +6,6 @@ function createFiles() {
     mkdir "publicfolder"
     echo "Random data 1" >text1.txt
     echo "Random data 2." >text2.txt
-    echo "Random data 3..." >text3.txt
     echo "Random data, but now in a FOLDER" >folder1/text.txt
     echo "Not so secret data" >publicFolder/text.txt
 }
@@ -14,8 +13,18 @@ function createFiles() {
 function getFileInformation() {
     # Find all files/ folders under current directory
     # Exclude readme.md, script files, git-related shit, and go pkg (auto formatter dependencies)
-    files=$(find . ! -name "*.sh" ! -name "go.*" ! -name "*.md" ! -path './.git*')
-    echo "$files"
+    files=$(
+        find . -type f \
+            ! -name "*.sh" \
+            ! -name "go.*" \
+            ! -name "*.md" \
+            ! -path './.git*'
+    )
+
+    for i in "${files[@]}"; do
+        :
+        echo $i
+    done
 }
 
 # Prompt
