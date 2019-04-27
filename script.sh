@@ -21,9 +21,9 @@ function getFileInformation() {
             ! -path './.git*'
     )
 
-    for i in "${files[@]}"; do
-        :
-        echo $i
+    for i in ${files[@]}; do
+        fileData="$(ls -al $i) $(md5sum $i)"
+        $(echo $fileData >>result.txt)
     done
 }
 
