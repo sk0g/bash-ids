@@ -22,7 +22,7 @@ function getFileInformation() {
 
     for i in ${files[@]}; do
         fileData="$(ls -al $i) $(md5sum $i)"
-        $(echo $fileData >>result.txt)
+        $(echo $fileData >result.txt)
     done
 }
 
