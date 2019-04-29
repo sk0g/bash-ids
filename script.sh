@@ -45,28 +45,24 @@ decision=${1^^}
 
 # Figure out what the input is
 case $decision in
+"-I")
+    echo "Creating files now..."
+    createFiles
+    echo "Folders and files have been created."
+    ;;
+"-C")
+    echo "Scanning the folder now"
+    getFileInformation
+    # TODO: Write details to file when done
+    ;;
 "-D")
     echo "Cleaning up the directory..."
     ./cleanup.sh
     echo "Done!"
     ;;
-"-C")
-    echo "Creating files now..."
-    createFiles
-    echo "Folders and files have been created."
-    ;;
-"N")
-    echo "Very well, create the files"
-
-    while true; do
-        read -p "[Y]es, I have added/edited the files and want to scan them now " isReady
-
-        if [[ "$isReady" == "Y" ]]; then
-            break
-        fi
-    done
-    echo "Scanning files and stuff now"
-    getFileInformation
+"-O")
+    echo "Should probably do scanning here, hey?"
+    # TODO: Actually like, anything, here
     ;;
 *)
     echo "Invalid input detected. Please try to follow instructions."
