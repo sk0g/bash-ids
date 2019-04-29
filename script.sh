@@ -27,14 +27,17 @@ function getFileInformation() {
     done
 }
 
-# Prompt
-echo "This is an Intrusion Detection System"
-echo "Do you want to let this program create files?"
-echo "[Y]es, I want the program to create the files. [N]o, I'll do it myself"
-read decision
+if [ -z "$1" ]; then # If no parameters have been passed in
+    # Prompt
+    echo "This is an Intrusion Detection System"
+    echo "Please run this script with a parameter"
+    echo "-i creates base files to monitor"
+    echo "-c records file details into a verification file"
+    echo "-o scans the local files for changes, displays the results, and stores them into a file"
+fi
 
-# Uppercase the $decision
-decision=${decision^^}
+# Uppercase the first parameter passed in (ignore the rest)
+decision=${1^^}
 
 # Figure out what the input is
 case $decision in
