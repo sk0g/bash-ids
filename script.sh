@@ -9,6 +9,13 @@ function createFiles() {
     echo "Not so secret data" >publicFolder/text.txt
 }
 
+function deleteFiles() {
+    rm folder1 -rf
+    rm publicFolder -rf
+    rm text*.txt -f
+    rm result.txt -f
+}
+
 function getFileInformation() {
     # Find all files/ folders under current directory
     # Exclude readme.md, script files, git-related shit, and go pkg (auto formatter dependencies)
@@ -57,7 +64,7 @@ case $decision in
     ;;
 "-D")
     echo "Cleaning up the directory..."
-    ./cleanup.sh
+    deleteFiles
     echo "Done!"
     ;;
 "-O")
