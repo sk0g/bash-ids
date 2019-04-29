@@ -33,6 +33,7 @@ if [ -z "$1" ]; then # If no parameters have been passed in
     # -e needed to ensure newline gets printed as an actual line break, instead of "\n"
     echo "  -i | creates base files to monitor"
     echo "  -c | records file details into a verification file"
+    echo "  -d | deletes the non-script related files, to give you a clean slate to work with"
     echo -e "  -o | scans the local files for changes, displays the results, and stores them into a file \n"
 fi
 
@@ -41,7 +42,12 @@ decision=${1^^}
 
 # Figure out what the input is
 case $decision in
-"Y")
+"-D")
+    echo "Cleaning up the directory..."
+    ./cleanup.sh
+    echo "Done!"
+    ;;
+"-C")
     echo "Creating files now..."
     createFiles
     echo "Folders and files have been created."
