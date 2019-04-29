@@ -28,12 +28,12 @@ function getFileInformation() {
 }
 
 if [ -z "$1" ]; then # If no parameters have been passed in
-    # Prompt
     echo "This is an Intrusion Detection System"
-    echo "Please run this script with a parameter"
-    echo "-i creates base files to monitor"
-    echo "-c records file details into a verification file"
-    echo "-o scans the local files for changes, displays the results, and stores them into a file"
+    echo -e "Please supply one of the following parameters: \n"
+    # -e needed to ensure newline gets printed as an actual line break, instead of "\n"
+    echo "  -i | creates base files to monitor"
+    echo "  -c | records file details into a verification file"
+    echo -e "  -o | scans the local files for changes, displays the results, and stores them into a file \n"
 fi
 
 # Uppercase the first parameter passed in (ignore the rest)
