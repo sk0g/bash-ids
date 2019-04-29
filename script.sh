@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Magic function does nothing. For now.
 function createFiles() {
     mkdir "folder1"
     mkdir "publicfolder"
@@ -27,7 +26,7 @@ function getFileInformation() {
     done
 }
 
-if [ -z "$1" ]; then # If no parameters have been passed in
+function displayParameters() {
     echo "This is an Intrusion Detection System"
     echo -e "Please supply one of the following parameters: \n"
     # -e needed to ensure newline gets printed as an actual line break, instead of "\n"
@@ -35,6 +34,10 @@ if [ -z "$1" ]; then # If no parameters have been passed in
     echo "  -c | records file details into a verification file"
     echo "  -d | deletes the non-script related files, to give you a clean slate to work with"
     echo -e "  -o | scans the local files for changes, displays the results, and stores them into a file \n"
+}
+
+if [ -z "$1" ]; then # If no parameters have been passed in
+    displayParameters
 fi
 
 # Uppercase the first parameter passed in (ignore the rest)
@@ -67,5 +70,7 @@ case $decision in
     ;;
 *)
     echo "Invalid input detected. Please try to follow instructions."
+    echo -e "Here they are again. \n"
+    displayParameters
     ;;
 esac
