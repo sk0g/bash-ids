@@ -24,19 +24,20 @@ function getFileInformation() {
         find . -type f \
             ! -name "*.sh" \
             ! -name "go.*" \
+            ! -name "result.txt" \
             ! -name "*.md" \
             ! -path './.git*'
     )
 }
 
-function recordFileInformation() {
+function recordFileInformationTo() {
     files=$(getFileInformation)
-    rm result.txt -f
+    rm $1 -f
     for i in ${files[@]}; do
         fileData="$(ls -al $i) \
                 $(md5sum $i | awk '{ print $1 }')"
         # Awk step removes the filename at the end
-        $(echo $fileData >>result.txt)
+        $(echo $fileData >>$1)
     done
 }
 
@@ -66,7 +67,7 @@ case $decision in
     ;;
 "-C")
     echo "Scanning the folder now"
-    recordFileInformation
+    recordFileInformationTo "result.txt"
     # TODO: Write details to file when done
     ;;
 "-D")
