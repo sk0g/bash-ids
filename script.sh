@@ -27,9 +27,12 @@ function getFileInformation() {
             ! -path './.git*'
     )
 
+    rm result.txt -f
     for i in ${files[@]}; do
-        fileData="$(ls -al $i) $(md5sum $i)"
-        $(echo $fileData >result.txt)
+        fileData="$(ls -al $i) \
+            $(md5sum $i | awk '{ print $1 }')"
+        # Awk step removes the filename at the end
+        $(echo $fileData >>result.txt)
     done
 }
 
