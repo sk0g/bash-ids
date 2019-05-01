@@ -10,6 +10,7 @@ function createFiles() {
 }
 
 function deleteFiles() {
+    # -f suppresses missing file warnings. Gotta be ninja
     rm folder1 -rf
     rm publicFolder -rf
     rm text*.txt -f
@@ -19,18 +20,21 @@ function deleteFiles() {
 function getFileInformation() {
     # Find all files/ folders under current directory
     # Exclude readme.md, script files, git-related shit, and go pkg (auto formatter dependencies)
-    files=$(
+    echo $(
         find . -type f \
             ! -name "*.sh" \
             ! -name "go.*" \
             ! -name "*.md" \
             ! -path './.git*'
     )
+}
 
+function recordFileInformation() {
+    files=$(getFileInformation)
     rm result.txt -f
     for i in ${files[@]}; do
         fileData="$(ls -al $i) \
-            $(md5sum $i | awk '{ print $1 }')"
+                $(md5sum $i | awk '{ print $1 }')"
         # Awk step removes the filename at the end
         $(echo $fileData >>result.txt)
     done
@@ -62,7 +66,7 @@ case $decision in
     ;;
 "-C")
     echo "Scanning the folder now"
-    getFileInformation
+    recordFileInformation
     # TODO: Write details to file when done
     ;;
 "-D")
