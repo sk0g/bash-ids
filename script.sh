@@ -15,6 +15,7 @@ function deleteFiles() {
     rm publicFolder -rf
     rm text*.txt -f
     rm result.txt -f
+    rm current.txt -f
 }
 
 function getFileInformation() {
@@ -44,7 +45,7 @@ function recordFileInformationTo() {
 }
 
 function compareCurrentToResult() {
-    echo "henlo, promise to actually check the result/current files. One day"
+    echo $(diff result.txt current.txt)
 }
 
 function displayParameters() {
