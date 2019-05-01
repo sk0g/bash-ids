@@ -37,7 +37,7 @@ function recordFileInformationTo() {
     rm $1 -f
     for i in ${files[@]}; do
         fileData="$(ls -al $i) \
-                $(md5sum $i | awk '{ print $1 }')"
+            $(md5sum $i | awk '{ print $1 }')"
         # Awk step removes the filename at the end
         $(echo $fileData >>$1)
     done
@@ -56,10 +56,6 @@ function displayParameters() {
     echo "  -d | deletes the non-script related files, to give you a clean slate to work with"
     echo -e "  -o | scans the local files for changes, displays the results, and stores them into a file \n"
 }
-
-if [ -z "$1" ]; then # If no parameters have been passed in
-    displayParameters
-fi
 
 # Uppercase the first parameter passed in (ignore the rest)
 decision=${1^^}
@@ -87,6 +83,7 @@ case $decision in
     compareCurrentToResult
     ;;
 *)
+    # Default case fires even when no argument is supplied at all
     echo "Invalid input detected. Please try to follow instructions."
     echo -e "Here they are again. \n"
     displayParameters
