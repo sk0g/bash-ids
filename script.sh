@@ -25,12 +25,14 @@ function getFileInformation() {
             ! -name "*.sh" \
             ! -name "go.*" \
             ! -name "result.txt" \
+            ! -name "current.txt" \
             ! -name "*.md" \
             ! -path './.git*'
     )
 }
 
 function recordFileInformationTo() {
+    # first argument is filename to save results to
     files=$(getFileInformation)
     rm $1 -f
     for i in ${files[@]}; do
@@ -39,6 +41,10 @@ function recordFileInformationTo() {
         # Awk step removes the filename at the end
         $(echo $fileData >>$1)
     done
+}
+
+function compareCurrentToResult() {
+    echo "henlo, promise to actually check the result/current files. One day"
 }
 
 function displayParameters() {
@@ -66,9 +72,8 @@ case $decision in
     echo "Folders and files have been created."
     ;;
 "-C")
-    echo "Scanning the folder now"
+    echo "Scanning the folder now..."
     recordFileInformationTo "result.txt"
-    # TODO: Write details to file when done
     ;;
 "-D")
     echo "Cleaning up the directory..."
@@ -76,8 +81,10 @@ case $decision in
     echo "Done!"
     ;;
 "-O")
-    echo "Should probably do scanning here, hey?"
-    # TODO: Actually like, anything, here
+    echo "Scanning the folder now..."
+    recordFileInformationTo "current.txt"
+    echo "Done. Checking against the existing record now..."
+    compareCurrentToResult
     ;;
 *)
     echo "Invalid input detected. Please try to follow instructions."
