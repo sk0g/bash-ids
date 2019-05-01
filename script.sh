@@ -45,7 +45,13 @@ function recordFileInformationTo() {
 }
 
 function compareCurrentToResult() {
-    echo $(diff result.txt current.txt)
+    difference=$(diff -d result.txt current.txt)
+    if [ -z "$difference" ]; then
+        echo "No intrusions detected."
+    else
+        echo "There has been an intrusion. Processing the result..."
+        # TODO: Process the result
+    fi
 }
 
 function displayParameters() {
