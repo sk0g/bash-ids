@@ -50,7 +50,15 @@ function compareCurrentToResult() {
         echo "No intrusions detected."
     else
         echo "There has been an intrusion. Processing the result..."
-        # TODO: Process the result
+        """ 
+        TODO: Process and notify about files that are:
+            [ ] new
+            [ ] altered:
+                [ ] hash change
+                [ ] date of access change
+                [ ] other changes
+            [ ] deleted
+        """
     fi
 }
 
