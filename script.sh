@@ -27,6 +27,7 @@ function getFileInformation() {
             ! -name "go.*" \
             ! -name "result.txt" \
             ! -name "current.txt" \
+            ! -name "diff.txt" \
             ! -name "*.md" \
             ! -path './.git*'
     )
@@ -45,20 +46,21 @@ function recordFileInformationTo() {
 }
 
 function compareCurrentToResult() {
-    difference=$(diff -d result.txt current.txt)
+    difference=$(diff -uBr result.txt current.txt)
     if [ -z "$difference" ]; then
         echo "No intrusions detected."
     else
         echo "There has been an intrusion. Processing the result..."
-        """ 
-        TODO: Process and notify about files that are:
-            [ ] new
-            [ ] altered:
-                [ ] hash change
-                [ ] date of access change
-                [ ] other changes
-            [ ] deleted
-        """
+        echo "$difference" >diff.txt
+        #TODO: Process and notify about files that are:
+        #    [ ] new
+        #    [ ] altered:
+        #        [ ] hash change
+        #        [ ] date of access change
+        #        [ ] other changes
+        #    [ ] deleted
+        # TODO: Once ^^^ is done, uncomment the following line:
+        # rm diff.txt
     fi
 }
 
