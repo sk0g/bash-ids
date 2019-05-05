@@ -51,21 +51,26 @@ function printChangeInFile() {
     3: number of links
     4: username owner
     5: username group
-    6: date   modified
+    6: size
     7: month  modified
-    8: size
+    8: date modified
     9: time modified
     10: filename
     11: md5
     '
-    echo "Checking file: $1"
+    echo "Intrusion detected at $1"
 
     if [[ -z ${12} ]]; then
-        # Not multi line, only check the first line
+        if [[ $2 == +-* ]]; then
+            echo "New file, created by $4 on $9 at $8 $7"
+        elif [[ $2 == --* ]]; then
+            echo "File has been deleted"
+        fi
     else
+        echo thing
         # Multi line, step through elements
     fi
-
+    echo "---"
 }
 
 function compareCurrentToResult() {
@@ -93,12 +98,12 @@ function compareCurrentToResult() {
             printChangeInFile $KEY ${files[$KEY]}
         done
         #TODO: Process and notify about files that are:
-        #    [ ] new
+        #    [x] new
         #    [ ] altered:
         #        [ ] hash change
         #        [ ] date of access change
         #        [ ] other changes
-        #    [ ] deleted
+        #    [x] deleted
         # TODO: Once ^^^ is done, uncomment the following line:
         # rm diff.txt
     fi
