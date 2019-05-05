@@ -67,8 +67,15 @@ function printChangeInFile() {
             echo "File has been deleted"
         fi
     else
-        echo thing
-        # Multi line, step through elements
+        if [[ ${11} != ${21} ]]; then
+            echo "MD5 hash change: ${11} -> ${21}"
+        fi
+        if [[ $4 != ${14} ]] || [[ $5 != ${15} ]]; then
+            echo "Ownership change: $4 $5 -> ${14} ${15}"
+        fi
+        if [[ $9 != ${19} ]] || [[ $8 != ${18} ]] || [[ $7 != ${17} ]]; then
+            echo "Timestamp change: $9 $8 $7 -> ${19} ${18} ${17}"
+        fi
     fi
     echo "---"
 }
@@ -97,15 +104,7 @@ function compareCurrentToResult() {
         for KEY in "${!files[@]}"; do
             printChangeInFile $KEY ${files[$KEY]}
         done
-        #TODO: Process and notify about files that are:
-        #    [x] new
-        #    [ ] altered:
-        #        [ ] hash change
-        #        [ ] date of access change
-        #        [ ] other changes
-        #    [x] deleted
-        # TODO: Once ^^^ is done, uncomment the following line:
-        # rm diff.txt
+        rm diff.txt
     fi
 }
 
