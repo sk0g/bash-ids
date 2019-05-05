@@ -57,22 +57,19 @@ function compareCurrentToResult() {
 
         # First three lines are sorta filler information, skip
         while read line; do
-
-            # Access the filename
-            fileName=$(echo $line | cut -d' ' -f9)
-            files[$fileName]=$line
-
-            if [[ $line == +-* ]]; then # is an addition, maybe
-                echo "new file detected: $line"
-            elif [[ $line == --* ]]; then # is a deletion, maybe
-                echo "deleted file detected: $line"
+            # if line is add/ delete line
+            if [[ $line == +-* ]] || [[ $line == --* ]]; then
+                # Access the filename
+                fileName=$(echo $line | cut -d' ' -f9)
+                files[$fileName]+="$line\n"
             fi
         done < <(sed 1,3d diff.txt)
 
         # For every key in the associative array..
         for KEY in "${!files[@]}"; do
+            echo "Key: $KEY"
             # Print the VALUE attached to that KEY
-            echo "Value: ${files[$KEY]}"
+            echo -e "Value: ${files[$KEY]}"
         done
         #TODO: Process and notify about files that are:
         #    [ ] new
