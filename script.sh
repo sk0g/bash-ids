@@ -52,6 +52,15 @@ function compareCurrentToResult() {
     else
         echo "There has been an intrusion. Processing the result..."
         echo "$difference" >diff.txt
+
+        # First three lines are sorta filler information, skip
+        tail --lines=+4 diff.txt | while read line; do
+            if [[ $line == +-* ]]; then # is an addition, maybe
+                echo "new file detected: $line"
+            elif [[ $line == --* ]]; then # is a deletion, maybe
+                echo "deleted file detected: $line"
+            fi
+        done
         #TODO: Process and notify about files that are:
         #    [ ] new
         #    [ ] altered:
