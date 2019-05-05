@@ -45,6 +45,29 @@ function recordFileInformationTo() {
     done
 }
 
+function printChangeInFile() {
+    : ' Arg number: what it is. Add 9 to indexfor next line (if exists)
+    2: permissions
+    3: number of links
+    4: username owner
+    5: username group
+    6: date   modified
+    7: month  modified
+    8: size
+    9: time modified
+    10: filename
+    11: md5
+    '
+    echo "Checking file: $1"
+
+    if [[ -z ${12} ]]; then
+        # Not multi line, only check the first line
+    else
+        # Multi line, step through elements
+    fi
+
+}
+
 function compareCurrentToResult() {
     difference=$(diff -uBr result.txt current.txt)
     if [ -z "$difference" ]; then
@@ -61,15 +84,13 @@ function compareCurrentToResult() {
             if [[ $line == +-* ]] || [[ $line == --* ]]; then
                 # Access the filename
                 fileName=$(echo $line | cut -d' ' -f9)
-                files[$fileName]+="$line\n"
+                files[$fileName]+="$line "
             fi
         done < <(sed 1,3d diff.txt)
 
         # For every key in the associative array..
         for KEY in "${!files[@]}"; do
-            echo "Key: $KEY"
-            # Print the VALUE attached to that KEY
-            echo -e "Value: ${files[$KEY]}"
+            printChangeInFile $KEY ${files[$KEY]}
         done
         #TODO: Process and notify about files that are:
         #    [ ] new
