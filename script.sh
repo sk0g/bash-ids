@@ -53,11 +53,12 @@ function compareCurrentToResult() {
         echo "There has been an intrusion. Processing the result..."
         echo "$difference" >diff.txt
 
+        IFS='' # Preserve whitespace one lines
         # First three lines are sorta filler information, skip
-        tail --lines=+4 diff.txt | while read line; do
-            if [[ $line == +-* ]]; then # is an addition, maybe
+        sed 1,3d diff.txt | while read line; do
+            if [[ $line == +* ]]; then # is an addition, maybe
                 echo "new file detected: $line"
-            elif [[ $line == --* ]]; then # is a deletion, maybe
+            elif [[ $line == -* ]]; then # is a deletion, maybe
                 echo "deleted file detected: $line"
             fi
         done
