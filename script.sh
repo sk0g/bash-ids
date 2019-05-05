@@ -53,14 +53,26 @@ function compareCurrentToResult() {
         echo "There has been an intrusion. Processing the result..."
         echo "$difference" >diff.txt
 
-        IFS='' # Preserve whitespace one lines
+        declare -A files
+
         # First three lines are sorta filler information, skip
-        sed 1,3d diff.txt | while read line; do
-            if [[ $line == +* ]]; then # is an addition, maybe
+        while read line; do
+
+            # Access the filename
+            fileName=$(echo $line | cut -d' ' -f9)
+            files[$fileName]=$line
+
+            if [[ $line == +-* ]]; then # is an addition, maybe
                 echo "new file detected: $line"
-            elif [[ $line == -* ]]; then # is a deletion, maybe
+            elif [[ $line == --* ]]; then # is a deletion, maybe
                 echo "deleted file detected: $line"
             fi
+        done < <(sed 1,3d diff.txt)
+
+        # For every key in the associative array..
+        for KEY in "${!files[@]}"; do
+            # Print the VALUE attached to that KEY
+            echo "Value: ${files[$KEY]}"
         done
         #TODO: Process and notify about files that are:
         #    [ ] new
