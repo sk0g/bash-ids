@@ -138,10 +138,12 @@ case $decision in
     echo "Done!"
     ;;
 "-O")
-    echo "Scanning the folder now..."
+    echo "Scanning the folder..."
     recordFileInformationTo "current.txt"
-    echo "Done. Checking against the existing record now..."
+    echo "Done. Checking against the existing record..."
     compareCurrentToResult
+    echo "Recording state..."
+    recordFileInformationTo "result.txt"
     ;;
 *)
     # Default case fires even when no argument is supplied at all
