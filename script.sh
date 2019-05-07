@@ -131,6 +131,7 @@ case $decision in
 "-C")
     echo "Scanning the folder now..."
     recordFileInformationTo "result.txt"
+    echo "Local information recorded"
     ;;
 "-D")
     echo "Cleaning up the directory..."
